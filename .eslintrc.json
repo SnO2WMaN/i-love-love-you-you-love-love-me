@@ -1,32 +1,36 @@
 {
   "root": true,
   "extends": [
-    "next",
-    "next/core-web-vitals",
-    "plugin:eslint-comments/recommended"
+    "eslint:recommended",
+    "plugin:eslint-comments/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
   ],
   "plugins": [
     "unused-imports",
-    "simple-import-sort"
+    "simple-import-sort",
+    "react",
+    "react-hooks"
   ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
     "prefer-spread": 2,
     "prefer-template": 2,
-    "no-useless-rename": [
-      2
-    ],
-    "object-shorthand": [
-      2,
-      "always"
-    ],
+    "no-useless-rename": [2],
+    "object-shorthand": [2, "always"],
+    "quote-props": [2, "consistent-as-needed"],
     /* unused-imports */
-    "unused-imports/no-unused-imports": [
-      2
-    ],
+    "unused-imports/no-unused-imports": [2],
     /* simple-import-sort */
     "sort-imports": 0,
     "simple-import-sort/imports": 2,
-    "simple-import-sort/exports": 2
+    "simple-import-sort/exports": 2,
+    /* react */
+    "react/self-closing-comp": [2, { "component": true, "html": false }]
   },
   "overrides": [
     {
@@ -47,7 +51,16 @@
         "@typescript-eslint"
       ],
       "parser": "@typescript-eslint/parser",
-      "rules": {}
+      "rules": {
+        "react/jsx-filename-extension": 0,
+        "react/default-props-match-prop-types": 0,
+        "react/prop-types": 0,
+        "react/jsx-indent": 0,
+        "react/no-typos": 0,
+        "react/jsx-closing-tag-location": 0,
+        "react/jsx-wrap-multilines": 0,
+        "react/react-in-jsx-scope": 0 // because tsconfig jsx option is react-jsx
+      }
     }
   ]
 }
