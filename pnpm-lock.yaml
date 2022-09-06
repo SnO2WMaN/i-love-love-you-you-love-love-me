@@ -23,6 +23,7 @@ specifiers:
   eslint-plugin-simple-import-sort: 7.0.0
   eslint-plugin-unused-imports: 2.0.0
   graphology: ^0.24.1
+  graphology-layout-forceatlas2: ^0.9.2
   graphology-types: ^0.24.4
   ky: ^0.31.1
   lodash: ^4.17.21
@@ -48,10 +49,11 @@ specifiers:
 dependencies:
   '@emotion/css': 11.9.0_@babel+core@7.18.10
   '@react-sigma/core': 2.0.2_gsjgdj3msa35bwz2zxwblfmmmq
-  '@react-sigma/layout-forceatlas2': 2.0.2_zwaenuofyl6z47m3haijoqz6d4
+  '@react-sigma/layout-forceatlas2': 2.0.2_mzkqkoe5sc4m2ln7nfteyyv77y
   chroma-js: 2.4.2
   clsx: 1.2.1
   graphology: 0.24.1_graphology-types@0.24.4
+  graphology-layout-forceatlas2: 0.9.2_graphology-types@0.24.4
   graphology-types: 0.24.4
   ky: 0.31.1
   lodash: 4.17.21
@@ -574,13 +576,13 @@ packages:
       - sigma
     dev: false
 
-  /@react-sigma/layout-forceatlas2/2.0.2_zwaenuofyl6z47m3haijoqz6d4:
+  /@react-sigma/layout-forceatlas2/2.0.2_mzkqkoe5sc4m2ln7nfteyyv77y:
     resolution: {integrity: sha512-5XxEly3PEA2n0dPs9P1nd2RN2bQnSj4kgkvJQpr/jyzbT7XOvDix8CuLiomjExoXJViw6WhjXqFWb8EeJ/txcA==}
     peerDependencies:
       graphology-layout-forceatlas2: ^0.8.2
     dependencies:
       '@react-sigma/layout-core': 2.0.2_gsjgdj3msa35bwz2zxwblfmmmq
-      graphology-layout-forceatlas2: 0.8.2_graphology-types@0.24.4
+      graphology-layout-forceatlas2: 0.9.2_graphology-types@0.24.4
     transitivePeerDependencies:
       - graphology
       - lodash
@@ -2296,8 +2298,8 @@ packages:
     resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==}
     dev: true
 
-  /graphology-layout-forceatlas2/0.8.2_graphology-types@0.24.4:
-    resolution: {integrity: sha512-OsmOuQP0xiav5Iau9W9G4eb4cGx5tDcdzx9NudG6fhi6japqD+Z45zUBcwnp/12BPBXp/PKc5pvUe3Va6AsOUA==}
+  /graphology-layout-forceatlas2/0.9.2_graphology-types@0.24.4:
+    resolution: {integrity: sha512-VUF1xGnoq5qT0Svo03Bn4a31bA1ofPjakwpILD72J2N5t6g66hLQq/r8TKIx041DN7DATQZ0v6LnrA6Iyqs/Ow==}
     peerDependencies:
       graphology-types: '>=0.19.0'
     dependencies:
