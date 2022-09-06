@@ -26,7 +26,5 @@ tsconfig.tsbuildinfo
 # Vercel
 .vercel
 
-# Next.js
-.next/
-out/
-build/
+# Vite
+dist/
