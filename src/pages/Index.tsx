@@ -1,80 +1,20 @@
-import {
-  ControlsContainer,
-  FullScreenControl,
-  SigmaContainer,
-  useLoadGraph,
-  useSigma,
-  ZoomControl,
-} from "@react-sigma/core";
-import { useLayoutForceAtlas2 } from "@react-sigma/layout-forceatlas2";
-import chroma from "chroma-js";
+import { ControlsContainer, FullScreenControl, SigmaContainer, ZoomControl } from "@react-sigma/core";
 import clsx from "clsx";
-import Graph from "graphology";
-import React, { Suspense, useEffect, useMemo } from "react";
-import { animateNodes } from "sigma/utils/animate";
+import React, { Suspense, useMemo, useState } from "react";
 import useSWR from "swr";
 
 import { useURLParams } from "~/hooks/useURLParams";
+
+import { GraphDataController } from "./GraphDataController";
+import { GraphEventsController } from "./GraphEventsController";
+import { GraphSettingsController } from "./GraphSettingsController";
+import { DataSet } from "./types";
 
 export const mkUrl = ({ anilist, annict }: { anilist: string[]; annict: string[] }): string => {
   const url = new URL("/graph", import.meta.env.VITE_API_ENDPOINT);
   if (0 < anilist.length) url.searchParams.set("anilist", anilist.join(","));
   if (0 < annict.length) url.searchParams.set("annict", annict.join(","));
   return url.toString();
-};
-
-export type AnimeGraph = {
-  users: { id: string; name: string; size: number }[];
-  animes: { id: string; title: string; size: number }[];
-  statuses: { userId: string; animeId: string }[];
-};
-
-export const LoadGraph: React.FC<{ graph: AnimeGraph }> = ({ graph }) => {
-  const sigma = useSigma();
-  const loadGraph = useLoadGraph();
-  const layoutCircular = useLayoutForceAtlas2({ iterations: 500 });
-
-  useEffect(() => {
-    if (!graph) return;
-
-    const g = new Graph();
-    graph.users.forEach(({ id, name, size }) => {
-      g.addNode(id, {
-        label: name,
-        x: Math.random(),
-        y: Math.random(),
-        size: Math.max(15, 30 * ((size / graph.animes.length) ** 0.5)),
-        color: chroma.mix(
-          chroma(200, 0.37, 0.75, "hsl"),
-          chroma(146, 0.75, 0.75, "hsl"),
-          size / graph.users.reduce((p, { size }) => Math.max(p, size), 0),
-          "hsl",
-        ).hex(),
-      });
-    });
-    graph.animes.forEach(({ id, title, size }) => {
-      g.addNode(id, {
-        label: title,
-        x: Math.random(),
-        y: Math.random(),
-        size: Math.max(1, 30 * ((size / graph.users.length) ** 1.5)),
-        color: chroma.mix(
-          chroma(170, 0.25, 0.34, "hsl"),
-          chroma(348, 0.80, 0.75, "hsl"),
-          size / graph.users.length,
-          "hsl",
-        ).hex(),
-      });
-    });
-    graph.statuses.forEach(({ animeId, userId }) => {
-      g.addEdge(userId, animeId, { label: "watched", size: 1 });
-    });
-    loadGraph(g);
-
-    animateNodes(sigma.getGraph(), layoutCircular.positions(), { duration: 2000 });
-  }, [graph, layoutCircular, loadGraph, sigma]);
-
-  return null;
 };
 
 export const Fetcher: React.FC<
@@ -85,7 +25,7 @@ export const Fetcher: React.FC<
     annict: string[];
   }
 > = ({ anilist, annict, style, className }) => {
-  const { data } = useSWR<AnimeGraph>(mkUrl({ anilist, annict }), {
+  const { data } = useSWR<DataSet>(mkUrl({ anilist, annict }), {
     suspense: true,
     revalidateOnFocus: false,
     revalidateOnMount: false,
@@ -94,16 +34,20 @@ export const Fetcher: React.FC<
     refreshWhenHidden: false,
     refreshInterval: 0,
   });
+  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
 
   return (
     <div style={style} className={clsx(className)}>
       <SigmaContainer>
-        <LoadGraph
-          graph={
+        <GraphSettingsController hoveredNode={hoveredNode} />
+        <GraphEventsController setHoveredNode={(node) => setHoveredNode(node)} />
+        <GraphDataController
+          dataset={
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             data!
           }
         />
+
         <ControlsContainer position={"bottom-right"}>
           <ZoomControl />
           <FullScreenControl />
