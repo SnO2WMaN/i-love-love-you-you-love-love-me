@@ -67,10 +67,25 @@ export const Page: React.FC = () => {
   return (
     <div
       className={clsx(
+        "relative",
         "w-full",
         "h-screen",
       )}
     >
+      <a
+        target="_blank"
+        rel="noreferrer"
+        href="https://github.com/SnO2WMaN/i-love-love-you-you-love-love-me"
+        className={clsx(
+          ["absolute", ["left-2", "bottom-2"], ["z-50"]],
+          ["px-4", "py-2"],
+          ["text-md", "text-white"],
+          ["rounded-md"],
+          ["bg-slate-600", "hover:bg-slate-700", "bg-opacity-75", "backdrop-blur-sm"],
+        )}
+      >
+        GitHub
+      </a>
       <Suspense fallback={<span>Loading</span>}>
         <Fetcher
           style={{ width: "100%", height: "100%" }}
