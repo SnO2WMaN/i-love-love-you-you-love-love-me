@@ -1,16 +1,9 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-  };
-
-  # dev
-  inputs = {
+    corepack.url = "github:SnO2WMaN/corepack-flake";
     devshell.url = "github:numtide/devshell";
     flake-utils.url = "github:numtide/flake-utils";
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
   };
 
   outputs = {
@@ -25,27 +18,25 @@
           inherit system;
           overlays = with inputs; [
             devshell.overlay
+            corepack.overlays.default
           ];
         };
       in {
         devShells.default = pkgs.devshell.mkShell {
           packages = with pkgs; [
             alejandra
-            dprint
             treefmt
             nodejs-16_x
-            nodePackages.pnpm
+            (mkCorepack {
+              nodejs = nodejs-16_x;
+              pm = "pnpm";
+            })
           ];
-          commands = [
-            {
-              package = "treefmt";
-              category = "formatters";
-            }
-          ];
+          devshell.startup.pnpm_install.text = "pnpm install";
           env = [
             {
               name = "PATH";
-              eval = "$PATH:$PRJ_ROOT/node_modules/.bin";
+              prefix = "$PRJ_ROOT/node_modules/.bin";
             }
           ];
         };
