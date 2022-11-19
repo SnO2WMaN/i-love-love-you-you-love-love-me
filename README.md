@@ -14,3 +14,7 @@ https://i-love-love-you-you-love-love-me.vercel.app/?annict=tosuke,rinsuki&anili
   - ex: if https://annict.com/@rinsuki, then `rinsuki` (omit `@`)
 - `anilist`
   - ex: https://anilist.co/user/sno2wman, then `sno2wman`
+
+## Name
+
+[Guitar Vader - I Love Love You (Love Love Super Dimension Mix)](https://soundcloud.com/hideki-naganuma/guitar-vader-remixed-by-hideki)
