@@ -26,6 +26,7 @@
           packages = with pkgs; [
             alejandra
             treefmt
+            dprint
             nodejs-16_x
             (mkCorepack {
               nodejs = nodejs-16_x;
